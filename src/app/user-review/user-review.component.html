@@ -1,0 +1,7 @@
+<div class="review-container">
+    <div class="review-list">
+        <rating [(ngModel)]="review.rating" [max]="5" [readonly]="true"></rating>
+        <p><i>"{{ review.text }}"</i> -- <b>{{ review.name }}</b></p>
+      </div>
+
+</div>  

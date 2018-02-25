@@ -1,0 +1,13 @@
+
+
+.section-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.movie-item {
+    width: 30%;
+    display: flex;
+    margin-top: 15px;
+}

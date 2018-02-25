@@ -1,0 +1,49 @@
+<div class="movie-container">
+    
+    <ngb-alert *ngIf="showAlert" (close)="showAlert = false" [dismissible]="true">
+        <strong>You're out of cash!</strong> Sell some movies in order to buy new ones.
+      </ngb-alert>
+
+  <app-loading-indicator [loading]="loading"></app-loading-indicator>    
+      <div class="movie-image">
+          <img src="{{ movie?.imgUrl }}" />
+        </div>
+      
+        <div class="movie-info">
+          <h4>
+            {{ movie?.title }} ({{ movie?.year }})
+              <span *ngIf="isSavedMovie" class="badge badge-secondary">Saved</span>
+          </h4> 
+          <p><strong>Director:</strong> {{ movie?.director }}</p>
+          <p>{{ movie?.fullDescription }}</p>
+          
+      
+          <div class="actions">
+            <button (click)="addMovie()" *ngIf="!isSavedMovie" class="btn btn-success">
+              <i class="fa fa-plus"></i>
+              Add Movie
+            </button>
+            <button (click)="removeMovie()" *ngIf="isSavedMovie" class="btn btn-danger">
+                <i class="fa fa-remove"></i>
+                Remove Movie
+              </button>
+              
+          </div>
+         
+        </div>
+        <div class="reviews">
+            
+            <div class="reviews-list">
+                <h5>User Reviews</h5>
+                <app-user-review *ngFor="let review of movie?.reviews" [review]="review"></app-user-review>
+            </div>
+            <div class="new-review">
+                <h5>Add your review!</h5>
+                <app-new-review [disabled]="reviewAdded" (reviewAdded)="addMovieReview($event)" class="new-review"></app-new-review>
+            </div>
+
+
+        </div>
+
+
+</div>

@@ -1,0 +1,15 @@
+<form name="new-review" (ngSubmit)="addReview()">
+  <div class="form-group">
+    <label for="name">Your Name</label>
+    <input [disabled]="disabled" name="name" type="text" placeholder="Enter your name" class="form-control" [(ngModel)]="review.name" />
+  </div>
+  <div class="form-group">
+    <label for="rating">Your Rating</label>
+    <input [disabled]="disabled" name="rating" [(ngModel)]="review.rating" class="form-control" type="number" min="0" max="5" />
+  </div>
+  <div class="form-group">
+    <textarea [disabled]="disabled" name="text" [(ngModel)]="review.text" class="form-control" placeholder="What did you think about this movie?"></textarea>
+  </div>
+  <button [disabled]="disabled" type="submit" class="btn btn-primary">Submit</button>
+  <span class="review-added" *ngIf="disabled">Your review has been added, thank you!</span>
+</form>

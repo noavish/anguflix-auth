@@ -1,0 +1,23 @@
+<div class="movies-container">
+    <div class="section-header">
+        <h2>All Movies</h2> 
+        <div class="filter-container form-inline">
+            <app-search [term]="filters.title" (termChanged)="updateFilter('title', $event)"></app-search>
+            <app-year-filter class="year-filter-container" [year]="filters.year" (yearChanged)="updateFilter('year', $event)"></app-year-filter>
+        </div>
+      </div>
+
+      <p *ngIf="movies?.length == 0">
+        There are no Movies found for the current filter
+      </p>
+
+      <app-loading-indicator [loading]="loading"></app-loading-indicator>
+
+      <ngb-alert *ngIf="outOfBudgetAlert" (close)="outOfBudgetAlert = false" [dismissible]="true">
+          <strong>You're out of cash!</strong> Sell some movies in order to buy new ones.
+        </ngb-alert>
+      
+      <div *ngIf="!loading" class="section-container">
+        <app-movie-item class="movie-item" *ngFor="let movie of movies" (addMovieClicked)="saveMovie($event)" [movie]="movie"></app-movie-item>
+      </div>
+</div>

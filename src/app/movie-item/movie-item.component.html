@@ -1,0 +1,25 @@
+<div class="movie-card">
+      <img class="rounded movie-thumbnail" src="{{ movie.imgUrl }}"/>
+
+  <h4>{{ movie.title }} ({{ movie.year }})</h4>
+  <div class="actions">
+      <a class="action-button">
+          <button [routerLink]="['', movie._id]" class="btn btn-secondary">
+              <i class="fa fa-info"></i>
+              More Info
+            </button>
+      </a>
+        
+        <button type="button" *ngIf="!removeMode" class="btn btn-success action-button" (click)="addMovie()">
+            <i class="fa fa-plus"></i>
+            Add Movie
+          </button>
+          <button type="button" *ngIf="removeMode" class="btn btn-danger" (click)="removeMovie()">
+              <i class="fa fa-remove"></i>
+              Remove Movie
+            </button>
+      </div>
+  <p class="short-description">{{ movie.shortDescription }}</p>
+
+
+</div>
