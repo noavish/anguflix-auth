@@ -29,8 +29,11 @@
     "angular2-flash-messages": "^2.0.5",
     "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
+    "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
     "ng2-rating": "0.0.7",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },
