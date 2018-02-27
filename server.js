@@ -55,6 +55,9 @@ app.get('/getUserDetails', function (req, res){
   }
 });
 
+// Point static path to dist
+app.use(express.static(path.join(__dirname, 'dist')));
+
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
   if (req.isAuthenticated()){
@@ -64,8 +67,6 @@ app.get('*', (req, res) => {
   }
 });
 
-// Point static path to dist
-app.use(express.static(path.join(__dirname, 'dist')));
 
  // Catch all other routes and return the index file
 app.use((err, req, res, next) => {
