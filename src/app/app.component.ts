@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { UsersService } from './users.service';
+import User from './models/user';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
-
-  budget : number
+  user:User = new User();
 
   constructor(private usersService : UsersService) {
-    this.budget = this.usersService.getUser().budget;
-    // Register for the budget change event so that we can update the counter
-    // if anyone purchases or refunds a movie
-    this.usersService.budgetUpdated.subscribe(newBudget => this.budget = newBudget);
+   this.user = this.usersService.getUser();;
   }
+
+  ngOnInit() {
+  
+  }    
 }
