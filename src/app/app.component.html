@@ -1,10 +1,16 @@
 <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Anguflix</a>
     <div class="balance pull-right">
+        Welcome
+        {{ user.username }}
+    </div>
+    <div class="balance pull-right">
         Account balance
         <i class="fa fa-angle-right"></i>
         {{ user.budget }}$
-          
+    </div>
+    <div class="balance pull-right">
+        <a href="#" (click)="logout()">Logout</a>
     </div>
   </nav>
   <div class="container">

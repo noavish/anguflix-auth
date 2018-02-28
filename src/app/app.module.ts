@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+
 import { RouterModule, Routes } from '@angular/router';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StarRatingModule } from 'angular-star-rating';
-import {RatingModule} from "ng2-rating";
+import {RatingModule} from 'ng2-rating';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppComponent } from './app.component';
@@ -24,6 +25,9 @@ import { YearFilterComponent } from './year-filter/year-filter.component';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { UserReviewComponent } from './user-review/user-review.component';
 import { NewReviewComponent } from './new-review/new-review.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
+import {AuthInterceptor} from '../AuthInterceptor';
 
 
 @NgModule({
@@ -39,7 +43,8 @@ import { NewReviewComponent } from './new-review/new-review.component';
     YearFilterComponent,
     LoadingIndicatorComponent,
     UserReviewComponent,
-    NewReviewComponent
+    NewReviewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -52,10 +57,12 @@ import { NewReviewComponent } from './new-review/new-review.component';
     }),
     NgbModule.forRoot(),
     RatingModule
-    
-    
   ],
-  providers: [UsersService, MoviesService],
+  providers: [UsersService, MoviesService, AuthService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

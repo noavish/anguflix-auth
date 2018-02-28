@@ -9,13 +9,21 @@ import User from './models/user';
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  user:User = new User();
+  // user: User = new/ User();
 
   constructor(private usersService : UsersService) {
-   this.user = this.usersService.getUser();;
+   // this.user = this.usersService.getUser();
   }
 
   ngOnInit() {
-  
-  }    
+      this.usersService.fetchUserDetails();
+  }
+
+  get user() {
+      return this.usersService.getUser();
+  }
+
+  logout() {
+      localStorage.removeItem('token');
+  }
 }

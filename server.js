@@ -5,7 +5,12 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-const expressSession=require('express-session');
+var jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
+
+const checkIfAuthenticated = expressJwt({
+    secret: 'thisIsTopSecret'
+});
 
 const app = express();
 
@@ -13,18 +18,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //Authentication middleware
-app.use(expressSession({ secret: 'thisIsASecret', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
-app.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-    console.log(user);
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
 
 passport.use(new LocalStrategy(
 //    { passReqToCallback : true},
@@ -37,21 +32,22 @@ passport.use(new LocalStrategy(
   }
 ));
 
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login?err',
-}));
 
-// Catch all other routes and return the index file
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/login.html'));
+
+app.post('/login', passport.authenticate('local', {
+    session: false
+}),(req,res)=>{
+    var token = jwt.sign(req.user, 'thisIsTopSecret', { expiresIn: "7d" });
+    res.send({token: token});
 });
 
-app.get('/getUserDetails', function (req, res){
-  if (req.isAuthenticated()){
-    res.send(req.user);
+
+app.get('/getUserDetails',checkIfAuthenticated, function (req, res){
+  if (req){
+      const obj = {username: req.user.username, id: req.user.id, savedMovies: [], budget: 30};
+    res.send(obj);
   } else {
-    res.redirect('/login');
+    res.redirect();
   }
 });
 
@@ -60,7 +56,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
-  if (req.isAuthenticated()){
+  if (req){
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   } else {
     res.redirect('/login');

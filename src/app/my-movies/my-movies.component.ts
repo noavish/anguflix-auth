@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../users.service';
+import {Component, OnInit} from '@angular/core';
+import {UsersService} from '../users.service';
 import Movie from '../models/movie';
 
 @Component({
-  selector: 'app-my-movies',
-  templateUrl: './my-movies.component.html',
-  styleUrls: ['./my-movies.component.css']
+    selector: 'app-my-movies',
+    templateUrl: './my-movies.component.html',
+    styleUrls: ['./my-movies.component.css']
 })
 export class MyMoviesComponent implements OnInit {
 
-  movies : Movie[]
-  constructor(private usersService : UsersService) { }
+    constructor(private usersService: UsersService) {
+    }
 
-  ngOnInit() {
-    this.setSavedMovies();
-  }
+    ngOnInit() {
+    }
 
-  removeMovie(movie) {
-    this.usersService.removeSavedMovie(movie._id);
-    this.setSavedMovies();
-  }
+    removeMovie(movie) {
+        this.usersService.removeSavedMovie(movie._id);
+    }
 
-  private setSavedMovies() {
-    this.movies = this.usersService.getUser().savedMovies;
-  }
+    get movies() {
+        console.log("trying to get data")
+        console.log(this.usersService.getUser().savedMovies);
+        return this.usersService.getUser().savedMovies;
+    }
 
 }

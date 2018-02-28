@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MoviesService } from '../movies.service';
 import Movie from '../models/movie';
 import { UsersService } from '../users.service';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-all-movies',
@@ -10,18 +11,19 @@ import { UsersService } from '../users.service';
 })
 export class AllMoviesComponent implements OnInit {
 
-  movies : Movie[]
+  movies: Movie[]
   filters = {
     title: '',
     year: null
   }
-  outOfBudgetAlert : boolean = false
-  loading : boolean = false
+  outOfBudgetAlert: boolean = false;
+  loading: boolean = false;
 
-  constructor(private moviesService : MoviesService, private usersService : UsersService) { }
+  constructor(private moviesService: MoviesService, private usersService : UsersService, private  authService: AuthService) { }
 
   ngOnInit() {
-    this.setMovies();    
+    this.setMovies();
+    console.log(this.authService.isLoggedIn());
   }
 
   saveMovie(movie) {
@@ -43,7 +45,7 @@ export class AllMoviesComponent implements OnInit {
     setTimeout(() => {
       this.moviesService.getMovies(this.filters).subscribe(movies => {
         this.loading = false;
-        this.movies = movies
+        this.movies = movies;
         this.filterSavedMovies();
       });
     }, 2000);
